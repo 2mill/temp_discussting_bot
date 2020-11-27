@@ -1,20 +1,32 @@
 {
-  "name": "discussting_bot",
+  "name": "temp_discussting_bot",
   "version": "1.0.0",
-  "description": "An all purpose bot for Discussting",
+  "description": "An all purpose bot for the Discussting discord",
   "main": "bot.js",
-  "dependencies": {
-    "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0",
-    "eslint": "^7.14.0",
-    "fs": "^0.0.1-security",
-    "nodemon": "^2.0.6"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node bot.js"
   },
-  "author": "Dorn",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2mill/temp_discussting_bot.git"
+  },
+  "author": "2mill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2mill/temp_discussting_bot/issues"
+  },
+  "homepage": "https://github.com/2mill/temp_discussting_bot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security"
+  },
+  "devDependencies": {
+    "eslint": "^7.14.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1"
+  }
 }

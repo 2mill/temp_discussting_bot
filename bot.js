@@ -24,9 +24,10 @@ for (const file of eventFiles) {
 }
 
 const config = require('./config.json');
+const key = require('./key.json');
 const prefix = config.prefix;
-const ownerID = config.ownerID;
-client.login(config.token);
+const owner = config.owner;
+client.login(key.token);
 
 
 
