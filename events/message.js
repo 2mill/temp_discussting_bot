@@ -13,8 +13,10 @@ module.exports = {
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
 
         const command = args.shift().toLowerCase();
-        console.log(`Attempting to run ${command}`)
+        console.log(args);
+        console.log(`Running ${command}`)
         const cmd = client.commands.get(command);
+
         cmd.execute(message, args);
 
     }
