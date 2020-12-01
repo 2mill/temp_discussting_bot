@@ -4,9 +4,6 @@ module.exports = {
     execute(client, message) {
 
         prefix = client.config.get('prefix');
-        console.log(prefix);
-        console.log(message.content);
-
         if (message.author.bot) return;
         if (message.content.indexOf(prefix) !== 0) return;
         // const args = message.content.slice(prefix.length).trim(split(/ +g/));
