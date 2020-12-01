@@ -12,7 +12,7 @@ module.exports = {
         //Generate emebbed
         let helpEmbed = new Discord.MessageEmbed()
             .setTitle(`${message.client.user.username} Help`)
-            .setDescription('List of all commands')
+            .setDescription('List of all suck it')
             .setColor('#52307C');
         //add prefix field
         helpEmbed.addField('Prefix:', prefix)
