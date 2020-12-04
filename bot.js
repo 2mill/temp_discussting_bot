@@ -1,4 +1,5 @@
 const fs = require('fs');
+require('dotenv').config();
 const Discord = require('discord.js');
 
 const client = new Discord.Client();
@@ -24,16 +25,19 @@ for (const file of eventFiles) {
 }
 
 const config = require('./config.json');
-const key = require('./key.json');
+const key = process.env.DISCORD_TOKEN;
 const prefix = config.prefix;
 const owner = config.owner;
 
 client.config = new Discord.Collection();
 client.config.set('prefix', prefix);
 client.config.set('owner', owner);
-
-console.log("Logging in");
-client.login(key.token);
+console.log("Logging in")
+client.login(key).catch(() => {
+    console.error('Login Failed');
+    console.log(key);
+    process.exit(1);
+});
 
 client.once('ready' , () => {
     client.events.get('ready').execute();

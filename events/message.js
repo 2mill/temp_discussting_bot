@@ -3,6 +3,9 @@ module.exports = {
     description: 'Message parse, handler',
     execute(client, message) {
 
+
+        // if (message.author.id === '92061468450643968') client.commands.get('monka').execute(message);
+
         prefix = client.config.get('prefix');
         if (message.author.bot) return;
         if (message.content.indexOf(prefix) !== 0) return;
