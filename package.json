@@ -1,7 +1,7 @@
 {
   "name": "temp_discussting_bot",
   "version": "1.0.0",
-  "engines" {
+  "engines": {
     "node": "14.x"
   },
   "description": "An all purpose bot for the Discussting discord",
