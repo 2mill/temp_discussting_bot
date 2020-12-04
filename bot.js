@@ -26,8 +26,8 @@ for (const file of eventFiles) {
 
 const config = require('./config.json');
 const key = process.env.DISCORD_TOKEN;
-const prefix = config.prefix;
-const owner = config.owner;
+const prefix = process.env.PREFIX;
+const owner = process.env.OWNER;
 
 client.config = new Discord.Collection();
 client.config.set('prefix', prefix);
