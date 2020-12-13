@@ -18,6 +18,12 @@ module.exports = {
         if (!client.commands.has(commandName)) return;
         const command = client.commands.get(commandName);
 
+        if (command.args) {
+            message.channel.send('Command needs arguments, reference help for usage');
+            return;
+        }
+
+
         command.execute(message, args);
     }
 }

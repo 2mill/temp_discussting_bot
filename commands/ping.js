@@ -4,7 +4,9 @@ module.exports = {
     name: 'ping',
     description: 'Small ping pong to make sure that the bot is working',
     execute(message, args) {
-        message.channel.send("Pong!");
+
+        const ping = message.creatTimeStamp - Date.now();
+        message.channel.send('Bot Latency: ' + ping + 'ms');
         return;
     }
 }
