@@ -2,10 +2,12 @@ const message = require("../events/message");
 
 module.exports = {
     name: 'ping',
-    description: 'Small ping pong to make sure that the bot is working',
-    execute(message, args) {
+    description: 'Latency of the bot to respond',
+    args: false,
+    execute(message) {
+        const ping = Math.abs(message.createdTimestamp- Date.now());
 
-        const ping = message.creatTimeStamp - Date.now();
+        console.log(message.creatTimeStamp);
         message.channel.send('Bot Latency: ' + ping + 'ms');
         return;
     }
