@@ -25,7 +25,9 @@ module.exports = {
 
         if (botHasPermission && userHasPermission) {
             console.log(args[0] + 1);
-            channel.bulkDelete(args[0] + 1).catch(console.error());
+
+            console.log(args[0]++);
+            channel.bulkDelete(args[0]++).catch(console.error());
         }
     }
 }
