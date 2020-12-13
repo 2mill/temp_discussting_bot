@@ -18,33 +18,14 @@ module.exports = {
         const botPermissionsIn = guild.me.permissionsIn(channel);
         //User permissions in specified channel
         const userChannelPermissions = channel.permissionsFor(member);
-
-
-        console.log(userChannelPermissions.bitfield);
-
         //Check user permissions for channel to have manage message
         const userHasPermission = (userChannelPermissions.bitfield & 8192) !== 0;
         //Same thing for bot
         const botHasPermission = (botPermissionsIn.bitfield & 8192) !== 0;
 
         if (botHasPermission && userHasPermission) {
-            message.channel.bulkDelete(args[0] + 1).catch(console.error);
+            console.log(args[0] + 1);
+            channel.bulkDelete(args[0] + 1).catch(console.error());
         }
-
-
-
-
-        console.log(userHasPermission);
-
-
-
-        
-
-
-        console.log(botPermissionsFor);
-        console.log(botPermissionsIn);
-
-
-
     }
 }
