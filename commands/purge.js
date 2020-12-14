@@ -3,7 +3,7 @@ module.exports = {
     description:'Deletes n messages before this message',
     verbose: 'Deletes n previous messages, including the command message. Server only, requires permissions',
     usage: 'purge <n>',
-    args: true,
+    args: false,
     execute(message, args) {
 
 
@@ -23,11 +23,25 @@ module.exports = {
         //Same thing for bot
         const botHasPermission = (botPermissionsIn.bitfield & 8192) !== 0;
 
-        if (botHasPermission && userHasPermission) {
-            console.log(args[0] + 1);
+        if (!botHasPermission && !userHasPermission) return;
+        if (!args.length && message.reference) {
+            console.log(message.reference.messageID);
 
-            console.log(args[0]++);
-            channel.bulkDelete(args[0]++).catch(console.error());
+            channel.messages.fetch( {after: message.reference.messageID} )
+                .then ((messages) => {
+                    const size = messages.size;
+
+                    if (size) {
+                        messages.array()[0].channel.bulkDelete(size);
+                    }
+                }
+                )
+                .catch(console.error);
+
+
+
+
         }
+
     }
 }
