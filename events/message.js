@@ -19,6 +19,8 @@ module.exports = {
         const command = client.commands.get(commandName);
 
 
+        console.log(args);
+
         if (command.args && !args.length) {
             console.log(args);
             message.channel.send(command.usage);
