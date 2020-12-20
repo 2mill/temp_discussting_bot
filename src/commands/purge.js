@@ -23,8 +23,9 @@ module.exports = class Purge extends Commmands {
         });
     }
 
-    getVerbose() {
-        verboseEmbedd = new client.MessageEmbed()
-            .setTitle(`${}`)
+    async run(message, args) {
+
+        console.log(message);
+        
     }
 }

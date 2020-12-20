@@ -9,6 +9,13 @@ module.exports = class Command {
         this.guildOnly = options.guildOnly;
     }
 
+    async run() {
+    }
+
+
+
+
+
 
     
 
