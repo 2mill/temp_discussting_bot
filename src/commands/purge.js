@@ -24,8 +24,6 @@ module.exports = class Purge extends Commmands {
     }
 
     async run(message, args) {
-
         console.log(message);
-        
     }
 }
