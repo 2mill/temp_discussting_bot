@@ -1,0 +1,74 @@
+const fs = require('fs');
+require('dotenv').config();
+const Discord = require('discord.js');
+const chalk = require('chalk');
+const Load = require('./commands/Loader.js');
+
+
+const client = new Discord.Client();
+
+
+
+client.commands = new Discord.Collection();
+client.events = new Discord.Collection();
+client.commands.nameList = [];
+
+
+
+const commandFiles = fs.readdirSync('./commands').filter( file => file.endsWith('.js'));
+
+//Command Loading
+let commandList = [];
+console.log('Loading commands');
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
+    commandList.push(command.name);
+
+    console.log(command.name);
+    client.commands.nameList.push(command.name);
+}
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+
+//Event Loading
+console.log('Loading events');
+let eventList = [];
+for (const file of eventFiles) {
+    const event = require(`./events/${file}`);
+    client.events.set(event.name, event);
+    eventList.push(event.name);
+}
+
+const config = require('./config.json');
+const key = process.env.DISCORD_TOKEN;
+const prefix = process.env.PREFIX;
+const owner = process.env.OWNER;
+
+client.config = new Discord.Collection();
+client.config.set('prefix', prefix);
+client.config.set('owner', owner);
+console.log("Logging in")
+client.login(key).catch(() => {
+    console.error('Login Failed');
+    console.log(key);
+    process.exit(1);
+});
+
+client.once('ready' , () => {
+    console.log(chalk.green('Bot Ready'));
+    console.log(chalk.green('Commands loaded: ' + commandList));
+    console.log(chalk.green('Events loaded: ' + eventList));
+    client.events.get('ready').execute();
+});
+client.on('message', (message) => {
+    client.events.get('message').execute(client, message);
+});
+
+
+
+
+
+
+
+
+
