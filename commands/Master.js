@@ -1,6 +1,6 @@
 //Master Commad
 
-class Master {
+module.exports = class Master {
 	constructor(name, help, short, args) {
 		this.name = name;
 		this.help = help;
@@ -8,10 +8,14 @@ class Master {
 		this.args = args;
 	}
 
-	get help() {
-		return this.help;
+	back() {
+		return this.name;
 	}
-	get args() {
-		return this.args;
-	}
+
+	// get help() {
+	// 	return this.help;
+	// }
+	// get args() {
+	// 	return this.args;
+	// }
 }

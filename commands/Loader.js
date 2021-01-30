@@ -8,11 +8,14 @@ const chalk = require('chalk')
 function load(client, args) {
 	//Get Util commands
 	commands = {};
-	let commandFiles = fs.readdirSync('./util').filter( file => file.endsWith('.js'));
+	let commandFiles = fs.readdirSync('./commands/util').filter( file => file.endsWith('.js'));
 	for (const file of commandFiles) {
-		const command = require(`./util/${file}`);
+		let command = require(`./util/${file}`);
 		commands[file.split('.')[0]] = new command();
 	}
+	return commands;
+
+
 }
 
-module.exports = load;
+exports.load = load;
