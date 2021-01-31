@@ -31,8 +31,8 @@ client.on('message', (message) => {
 
 		//check if regex passed
 		if (command) {
-			properties.push(command[1]);
 			properties.push(message);
+			properties.push(command[1]);
 			//weird regex, check if there is text
 			(!/./.test(command[2]))
 				//push message contents past command
@@ -40,6 +40,7 @@ client.on('message', (message) => {
 		}
 
 		//find command
+
 		let loadedCommand = client.commands[properties[1]];
 		//if exists, run
 		if (loadedCommand) {
