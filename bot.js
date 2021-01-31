@@ -19,23 +19,39 @@ client.once('ready', () => {
 });
 
 client.commands = load;
-console.log(client.commands);
+// console.log(client.commands);
 
 client.on('message', (message) => {
 
 	console.log(message.content.startsWith(prefix));
-	let reg = new RegExp('^>');
 
 	if (message.content.startsWith(prefix)) {
-		command = /^>\w+/.exec(message.content);
-		let commandName = command[0].split(prefix)[1];
-		let loadedCommand = client.commands[commandName];
 
-		console.log(loadedCommand.back());
+		//regex for finding the start of the line
+		let command = />(\w+).?([\w\s@#<:>]*)/.exec(message.content);
+
+		let properties = [];
+		properties.push(message);
+
+		//check if regex passed
+		if (command) {
+			//weird regex, check if there is text
+			(!/./.test(command[2]))
+				//push message contents past command
+				something.push(command[2]);
+		}
+
+		//find command
+		let loadedCommand = client.commands[something[0]];
+		//if exists, run
+		if (loadedCommand) {
+			//super check master if implemented
+			let action = loadedCommand.action(message);
+			//if implemented, send back a message
+			if (action) message.channel.send(action);
+		}
 
 
 	}
 
-	if (!message.author.bot)
-		message.channel.send('Bot is currently under construction :construction:');
 })

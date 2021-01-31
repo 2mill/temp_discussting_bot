@@ -12,10 +12,16 @@ module.exports = class Master {
 		return this.name;
 	}
 
-	// get help() {
-	// 	return this.help;
-	// }
-	// get args() {
-	// 	return this.args;
-	// }
+	help(option = false) {
+		let helpInfo = [];
+		helpInfo.push(this.help);
+		helpInfo.push(option ? this.verbose : false);
+	}
+
+	/** Super action, there for unimplemented actions
+	 * @return false, to indicate that nothing has been implemented
+	 */
+	action() {
+		return false;
+	}
 }

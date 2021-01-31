@@ -1,3 +1,4 @@
+const { Message } = require('discord.js');
 const Master = require('../Master.js');
 module.exports = class ping extends Master{
     constructor() {
@@ -7,6 +8,10 @@ module.exports = class ping extends Master{
             'p',
             false
         )
+
+    }
+    action(message) {
+        return Math.abs(message.createdTimestamp - Date.now()) + 'ms';
     }
 
 }
