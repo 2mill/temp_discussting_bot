@@ -22,31 +22,29 @@ client.commands = load;
 // console.log(client.commands);
 
 client.on('message', (message) => {
-
-	console.log(message.content.startsWith(prefix));
-
 	if (message.content.startsWith(prefix)) {
 
 		//regex for finding the start of the line
 		let command = />(\w+).?([\w\s@#<:>]*)/.exec(message.content);
 
 		let properties = [];
-		properties.push(message);
 
 		//check if regex passed
 		if (command) {
+			properties.push(command[1]);
+			properties.push(message);
 			//weird regex, check if there is text
 			(!/./.test(command[2]))
 				//push message contents past command
-				something.push(command[2]);
+				properties.push(command[2]);
 		}
 
 		//find command
-		let loadedCommand = client.commands[something[0]];
+		let loadedCommand = client.commands[properties[1]];
 		//if exists, run
 		if (loadedCommand) {
 			//super check master if implemented
-			let action = loadedCommand.action(message);
+			let action = loadedCommand.action(...properties);
 			//if implemented, send back a message
 			if (action) message.channel.send(action);
 		}
