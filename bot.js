@@ -1,7 +1,8 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const chalk = require('chalk');
-const load = require('./commands/Loader.js').load();
+const commandLoad = require('./commands/Loader.js').load();
+const eventLoad = require('./events/Loader.js').load();
 
 const client = new Discord.Client();
 const config = require('./config.json');
@@ -18,7 +19,7 @@ client.once('ready', () => {
 
 });
 
-client.commands = load;
+client.commands = commandLoad;
 // console.log(client.commands);
 
 client.on('message', (message) => {
@@ -28,6 +29,7 @@ client.on('message', (message) => {
 		let command = />(\w+).?([\w\s@#<:>]*)/.exec(message.content);
 
 		let properties = [];
+
 
 		//check if regex passed
 		if (command) {

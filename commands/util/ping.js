@@ -1,4 +1,3 @@
-const { Message } = require('discord.js');
 const Master = require('../Master.js');
 module.exports = class ping extends Master{
     constructor() {
