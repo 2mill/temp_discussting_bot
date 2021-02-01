@@ -1,11 +1,22 @@
-module.exports = class Message {
+const Master = require('../Master.js');
+module.exports = class Message extends Master {
     constructor() {
-        this.name = 'message';
+        super(
+            'message',
+            'processor',
+        )
     }
 
     eventHandler(message) {
         if (message.author.bot) return;
         console.log('received message');
+    }
+
+    eventHandler() {
+        return function(message) {
+            if (message.author.bot) return;
+            message.channel.send('bot under construction :construction:');
+        }
     }
 
 }
