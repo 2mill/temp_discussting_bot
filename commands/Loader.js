@@ -7,7 +7,7 @@ const chalk = require('chalk')
 
 function load(client, args) {
 	//Get Util commands
-	commands = {};
+	let commands = {};
 	let commandFiles = fs.readdirSync('./commands/util').filter( file => file.endsWith('.js'));
 	for (const file of commandFiles) {
 		let command = require(`./util/${file}`);

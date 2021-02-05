@@ -6,6 +6,8 @@ module.exports = class Ready {
     }
     eventHandler() {
         return function() {
+            
+
             console.log(chalk.green('Bot is Ready.'));
         }
     }

@@ -24,4 +24,8 @@ module.exports = class Master {
 	action() {
 		return false;
 	}
+	_sendMessage(message, content) {
+		require('./actions/sendMessage').sendMessage(message, content);
+
+	}
 }
