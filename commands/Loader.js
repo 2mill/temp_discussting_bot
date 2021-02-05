@@ -11,7 +11,7 @@ function load(client, args) {
 	let commandFiles = fs.readdirSync('./commands/util').filter( file => file.endsWith('.js'));
 	for (const file of commandFiles) {
 		let command = require(`./util/${file}`);
-		commands[file.split('.')[0]] = new command();
+		commands[file.split('.')[0].toLowerCase()] = new command();
 	}
 	return commands;
 

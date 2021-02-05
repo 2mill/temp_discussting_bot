@@ -6,6 +6,7 @@ module.exports = class Master {
 		this.help = help;
 		this.short = short;
 		this.args = args;
+        this.sm = require('../actions/SendMessage');
 	}
 
 	back() {
