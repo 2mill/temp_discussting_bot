@@ -22,7 +22,6 @@ client.commands = commandLoad;
 
 
 
-
 client.login(client.keychain['token']).catch(() => {
 	console.error('Login Failed');
 	process.exit(1);

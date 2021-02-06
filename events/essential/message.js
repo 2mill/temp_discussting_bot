@@ -16,7 +16,6 @@ module.exports = class Message extends Master {
             if (!message.content.startsWith(client.keychain['prefix'])) return;
 
             let command = />(\w+).?([\w\s@#<:>]*)/.exec(message.content);
-            console.log(command);
             
             let properties = [];
             if (command) {
@@ -26,11 +25,13 @@ module.exports = class Message extends Master {
                     properties.push(command[2]);
             }
 
+            
+
             let loadedCommand = client.commands[properties[1]];
 
+
             if (loadedCommand) {
-                let action = loadedCommand.action(...properties);
-                if (action) message.channel.send(action);
+                loadedCommand.run(...properties)
             }
 
 

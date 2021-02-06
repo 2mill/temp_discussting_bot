@@ -6,7 +6,7 @@ module.exports = class Master {
 		this.help = help;
 		this.short = short;
 		this.args = args;
-        this.sm = require('../actions/SendMessage');
+		this.actions = require('../actions/Actions');
 	}
 
 	back() {
@@ -22,11 +22,7 @@ module.exports = class Master {
 	/** Super action, there for unimplemented actions
 	 * @return false, to indicate that nothing has been implemented
 	 */
-	action() {
+	run() {
 		return false;
-	}
-	_sendMessage(message, content) {
-		require('./actions/sendMessage').sendMessage(message, content);
-
 	}
 }

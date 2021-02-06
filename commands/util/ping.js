@@ -9,8 +9,9 @@ module.exports = class ping extends Master{
         )
 
     }
-    action(message) {
-        return Math.abs(message.createdTimestamp - Date.now()) + 'ms';
+    run(message) {
+        const content = Math.abs(message.createdTimestamp - Date.now()) + 'ms';
+        this.actions.sendMessage(message, content);
     }
 
 }

@@ -8,7 +8,7 @@ function load(client) {
 	for (const file of eventFiles) {
 		let eventt = require(`./essential/${file}`);
 		if (eventt)
-			events[file.split('.')[0]] = new eventt();
+			events[file.split('.')[0].toLowerCase()] = new eventt();
 	}
 	return events;
 }
