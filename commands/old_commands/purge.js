@@ -61,7 +61,7 @@ module.exports = {
                 // console.log(m.createdTimestamp);
             }
 
-            arr[0].channel.bulkDelete(++size);
+            arr[0].channel.bulkDelete(size);
 
 
             //Brain garbo rn

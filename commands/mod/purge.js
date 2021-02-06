@@ -12,10 +12,12 @@ module.exports = class Purge extends Master {
 
     run(message, content) {
 
-        let number = /\d{2,4}/.exec(content);
+        let number = /\d{1,4}/.exec(content);
         if (number)  {
-            number = Number(number.unshift());
+            number = Number(number.shift());
         }
+
+
 
         //check permissions & guild
 
@@ -37,6 +39,7 @@ module.exports = class Purge extends Master {
 
 
         if (!botHasPermission && !userHasPermission) return;
+
 
         this.actions.bulkDelete(message, number);
 
