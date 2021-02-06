@@ -1,5 +1,5 @@
 const Master = require('../Master.js');
-module.exports = class ping extends Master{
+module.exports = class Ping extends Master{
     constructor() {
         super(
             'ping',

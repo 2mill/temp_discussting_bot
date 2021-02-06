@@ -20,14 +20,14 @@ module.exports = class Message extends Master {
             let properties = [];
             if (command) {
                 properties.push(message);
+                properties.push(command[2]);
                 properties.push(command[1]);
-                if (!/./.test(command[2])) 
-                    properties.push(command[2]);
             }
 
-            
 
-            let loadedCommand = client.commands[properties[1]];
+
+
+            let loadedCommand = client.commands[properties[2]];
 
 
             if (loadedCommand) {

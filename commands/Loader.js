@@ -9,10 +9,9 @@ function load(client, args) {
 	//Get Util commands
 	let commands = {};
 
-	let folders = ['util', 'gaming'];
+	let folders = ['util', 'gaming', 'mod'];
 
 	for (const folder of folders) {
-		console.log(folder);
 		let commandFiles = fs.readdirSync(`./commands/${folder}`).filter( file => file.endsWith('.js'));
 		for (const file of commandFiles) {
 			let command = require(`./${folder}/${file}`);
