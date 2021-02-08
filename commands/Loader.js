@@ -5,9 +5,11 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const chalk = require('chalk')
 
-function load(client, args) {
+exports.load = (client, args) => {
 	//Get Util commands
 	let commands = {};
+
+	commands['iterator'] = [];
 
 	let folders = ['util', 'gaming', 'mod'];
 
@@ -24,6 +26,3 @@ function load(client, args) {
 	// }
 	return commands;
 }
-
-
-exports.load = load;

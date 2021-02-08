@@ -24,7 +24,8 @@
     "chalk": "^4.1.0",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "log-symbols": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^7.14.0",

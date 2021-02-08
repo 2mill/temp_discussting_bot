@@ -1,8 +1,8 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const chalk = require('chalk');
-const commandLoad = require('./commands/Loader.js').load();
-const eventLoad = require('./events/Loader.js').load();
+const commandLoad = require('./commands/Loader').load();
+const eventLoad = require('./events/Loader').load();
 
 
 const client = new Discord.Client();
