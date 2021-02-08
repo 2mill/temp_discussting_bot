@@ -5,17 +5,24 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const chalk = require('chalk')
 
-function load(client, args) {
+exports.load = (client, args) => {
 	//Get Util commands
-	commands = {};
-	let commandFiles = fs.readdirSync('./commands/util').filter( file => file.endsWith('.js'));
-	for (const file of commandFiles) {
-		let command = require(`./util/${file}`);
-		commands[file.split('.')[0]] = new command();
+	let commands = {};
+
+	commands['iterator'] = [];
+
+	let folders = ['util', 'gaming', 'mod'];
+
+	for (const folder of folders) {
+		let commandFiles = fs.readdirSync(`./commands/${folder}`).filter( file => file.endsWith('.js'));
+		for (const file of commandFiles) {
+			let command = require(`./${folder}/${file}`);
+			commands[file.split('.')[0].toLowerCase()] = new command();
+		}
 	}
+	// for (const file of commandFiles) {
+	// 	let command = require(`./util/${file}`);
+	// 	commands[file.split('.')[0].toLowerCase()] = new command();
+	// }
 	return commands;
-
-
 }
-
-exports.load = load;
