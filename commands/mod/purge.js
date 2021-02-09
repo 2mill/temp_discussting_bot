@@ -5,7 +5,7 @@ module.exports = class Purge extends Master {
         super(
             'purge',
             'Bulk delete messages',
-            false,
+            'mod',
             false
         )
     }

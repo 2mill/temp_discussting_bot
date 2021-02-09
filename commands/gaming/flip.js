@@ -4,7 +4,7 @@ module.exports = class Flip extends Master {
         super(
             'flip',
             'Flips a two sided coin',
-            'fl',
+            'gaming',
             'n'
         )
     }

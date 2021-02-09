@@ -5,7 +5,7 @@ module.exports = class Reload extends Master {
 		super(
 			'reload',
 			'Reloads all of the commands',
-			false,
+			'util',
 			false
 		)
 	}

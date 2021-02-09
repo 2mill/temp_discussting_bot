@@ -16,6 +16,7 @@ exports.bulkDelete = async (message, count) => {
         count++;
     }
 
+
     message.channel.bulkDelete(count, true)
         .then(messages => console.log(`Bulk delted ${messages.size} messages in #${message.channel.name}:${message.channel.guild.name}`))
         .catch('Failure');

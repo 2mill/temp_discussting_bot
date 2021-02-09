@@ -4,8 +4,9 @@ module.exports = class Ping extends Master{
         super(
             'ping',
             'Time between the server & the bot',
-            'p',
-            false
+            'util',
+            false,
+            false,
         )
 
     }

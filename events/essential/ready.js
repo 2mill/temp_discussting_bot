@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const symbols = require('log-symbols');
 module.exports = class Ready {
     constructor() {
         this.name = 'ready'
@@ -6,9 +7,7 @@ module.exports = class Ready {
     }
     eventHandler() {
         return function() {
-            
-
-            console.log(chalk.green('Bot is Ready.'));
+            console.log(chalk.green(symbols.success, 'Bot is Ready.'));
         }
     }
 }

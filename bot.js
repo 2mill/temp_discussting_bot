@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const chalk = require('chalk');
+const symbol = require('log-symbols');
 const commandLoad = require('./commands/Loader').load();
 const eventLoad = require('./events/Loader').load();
 
@@ -17,19 +18,36 @@ client.prefix = process.env.PREFIX;
 
 
 
+//Load events
 client.events = eventLoad;
+
+const SPACER = '=-=-=-=';
+
+console.log(SPACER, 'EVENTS LOADED',SPACER);
+client.events.forEach(event => {
+	client.on(event.name, event.eventHandler());
+	console.log(symbol.success, event.name);
+});
+
+//load commands
 client.commands = commandLoad;
 
 
+const LINE = ('--------');
+console.log(SPACER, 'COMMANDS LOADED',SPACER);
+client.commands.forEach(command => {
+	console.log(symbol.success, command.name);
+	if (!command.args) console.log(LINE, symbol.warning, `no args`);
+	if (!command.help) console.log(LINE, symbol.error , `no help`);
+	if (!command.usage) console.log(LINE, symbol.error , `no usage`);
 
+})
+
+//Login
 client.login(client.keychain['token']).catch(() => {
-	console.error('Login Failed');
+	console.error(symbol.error, 'Login Failed');
 	process.exit(1);
 });
 
-
-for (const event in client.events) {
-	client.on(event, client.events[event].eventHandler());
-}
 
 

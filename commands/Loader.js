@@ -7,17 +7,23 @@ const chalk = require('chalk')
 
 exports.load = (client, args) => {
 	//Get Util commands
-	let commands = {};
+	let commands = new Map();
 
-	commands['iterator'] = [];
 
 	let folders = ['util', 'gaming', 'mod'];
 
 	for (const folder of folders) {
 		let commandFiles = fs.readdirSync(`./commands/${folder}`).filter( file => file.endsWith('.js'));
 		for (const file of commandFiles) {
-			let command = require(`./${folder}/${file}`);
-			commands[file.split('.')[0].toLowerCase()] = new command();
+			const command = require(`./${folder}/${file}`);
+
+			if (command) {
+				const temp = new command();
+				if (!commands.get(temp.name)) {
+					commands.set(temp.name, temp);
+				}
+			}
+			// commands[file.split('.')[0].toLowerCase()] = new command();
 		}
 	}
 	// for (const file of commandFiles) {
