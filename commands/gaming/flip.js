@@ -1,11 +1,14 @@
 const Master = require('../Master.js');
 module.exports = class Flip extends Master {
     constructor() {
+        const info = {
+            name: 'flip',
+            description: 'Flips a two sided coin',
+            usage: 'flip',
+            category: 'gaming',
+        }
         super(
-            'flip',
-            'Flips a two sided coin',
-            'gaming',
-            'n'
+            info
         )
     }
 

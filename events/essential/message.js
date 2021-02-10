@@ -15,12 +15,23 @@ module.exports = class Message extends Master {
 
             if (!message.content.startsWith(client.keychain['prefix'])) return;
 
-            // let command = />(\w+).?(\w([\w\s@#<:>]*)/.exec(message.content);
+
+            /**
+             * [0] og message
+             * [1] if true, arguments
+             * [2] 
+             */
             let command = />(\w+).?(-[\w.]+)?([\w\s@#<:>]*)?/.exec(message.content);
 
 
+
+
             //cuz I am bad w/ Regex
+
+            //Removes the dash from the args field and places it into a set
+            //The reason for a set is because it automatically removes duplicates
             if (command[2]) command[2] = new Set(command[2].split('-')[1].split(''));
+            //Removes the extra whitespace that I get for the content
             if (command[3]) command[3] = command[3].trim();
 
             //remove original content
@@ -28,10 +39,15 @@ module.exports = class Message extends Master {
 
             //run command
             let loadedCommand = client.commands.get(command[1]);
+            console.log(loadedCommand);
             if (loadedCommand) {
+
+                //if the command loads, removes the first part, and the command name
                 command.shift();
                 command.shift();
+                console.log(command);
                 command.unshift(message);
+
                 //At this point we should be passing message, content, and args in that order.
                 loadedCommand.run(...command)
             }

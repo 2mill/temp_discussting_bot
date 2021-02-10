@@ -2,12 +2,18 @@ const Master = require('../Master.js');
 
 module.exports = class Purge extends Master {
     constructor() {
-        super(
-            'purge',
-            'Bulk delete messages',
-            'mod',
-            false
-        )
+
+        const info = {
+            name: 'purge',
+            description: 'Deltes n messages, max of 20. Cannot delete messages older than 20 days.',
+            usage:'purge [1-20]',
+            category: 'moderation',
+            modOnly: true,
+            permissions: [
+                'MANAGE_MESSAGES'
+            ]
+        }
+        super(info);
     }
 
     run(message, content) {

@@ -33,13 +33,12 @@ client.events.forEach(event => {
 client.commands = commandLoad;
 
 
-const LINE = ('--------');
 console.log(SPACER, 'COMMANDS LOADED',SPACER);
 client.commands.forEach(command => {
-	console.log(symbol.success, command.name);
-	if (!command.args) console.log(LINE, symbol.warning, `no args`);
-	if (!command.help) console.log(LINE, symbol.error , `no help`);
-	if (!command.usage) console.log(LINE, symbol.error , `no usage`);
+	console.log(symbol.success, command.info.name);
+	if (!command.documented) {
+		console.log(`\t${symbol.warning} no documentation`);
+	}
 
 })
 

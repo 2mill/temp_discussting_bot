@@ -19,8 +19,8 @@ exports.load = (client, args) => {
 
 			if (command) {
 				const temp = new command();
-				if (!commands.get(temp.name)) {
-					commands.set(temp.name, temp);
+				if (!commands.get(temp.info.name)) {
+					commands.set(temp.info.name, temp);
 				}
 			}
 			// commands[file.split('.')[0].toLowerCase()] = new command();
