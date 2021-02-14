@@ -3,17 +3,16 @@ exports.sendMessage = (message, content)  => {
 }
 
 exports.bulkDelete = async (message, count) => {
-
     message.channel.startTyping();
     if (count > 20) {
         return;
     }
 
     //reply bulk delete
-    if (!count) {
+    if (!count && message.reference) {
         count = await message.channel.fetch({after: message.reference.messageID}).size;
     } else {
-        count++;
+        return;
     }
 
 

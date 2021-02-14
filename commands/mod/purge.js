@@ -16,7 +16,7 @@ module.exports = class Purge extends Master {
         super(info);
     }
 
-    run(message, content) {
+    run(message, args, content) {
 
         let number = /\d{1,4}/.exec(content);
         if (number)  {
