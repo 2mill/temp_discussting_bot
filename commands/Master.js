@@ -1,24 +1,12 @@
 //Master Commad
 
 module.exports = class Master {
-	constructor(name, help, short, args) {
-		this.name = name;
-		this.help = help;
-		this.short = short;
-		this.args = args;
+	constructor(info) {
+		this.Discord = require('discord.js');
+		this.info = info;
+		this.documented = info.description && info.usage && info.category ? true : false;
 		this.actions = require('../actions/Actions');
 	}
-
-	back() {
-		return this.name;
-	}
-
-	help(option = false) {
-		let helpInfo = [];
-		helpInfo.push(this.help);
-		helpInfo.push(option ? this.verbose : false);
-	}
-
 	/** Super action, there for unimplemented actions
 	 * @return false, to indicate that nothing has been implemented
 	 */
