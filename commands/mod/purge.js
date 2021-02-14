@@ -5,7 +5,7 @@ module.exports = class Purge extends Master {
 
         const info = {
             name: 'purge',
-            description: 'Deltes n messages, max of 20. Cannot delete messages older than 20 days.',
+            description: 'Deltes n messages, max of 20. Cannot delete messages older than 14 days.',
             usage:'purge [1-20]',
             category: 'moderation',
             modOnly: true,

@@ -39,13 +39,11 @@ module.exports = class Message extends Master {
 
             //run command
             let loadedCommand = client.commands.get(command[1]);
-            console.log(loadedCommand);
             if (loadedCommand) {
 
                 //if the command loads, removes the first part, and the command name
                 command.shift();
                 command.shift();
-                console.log(command);
                 command.unshift(message);
 
                 //At this point we should be passing message, content, and args in that order.

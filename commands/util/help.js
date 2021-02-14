@@ -26,13 +26,44 @@ module.exports = class help extends Master {
 	run(message, args, content) {
 		const Discord = require('discord.js');
 		let end = 0;
-		console.log(args);
 		/**
 		 * TODO: Figure out arg thing and make sure it routes properly.
 		 */
-		if (args.has('c')) {
-			console.log(message.client.commandList);
+		if (args && args.has('c') && content) {
+			const embed = this._categoriesRichEmbed(message.client.commands, content);
+			if (embed) this.actions.sendMessage(message, embed);
+			else this.actions.sendMessage(message, 'Category D.N.E');
+			return;
 		}
+
+		let command = message.client.commands.get(content);
+		if (!command) {
+			let embed = new this.Discord.MessageEmbed()
+				.setTitle('Help')
+				.setColor('#6441a5');
+
+
+			let cats = new Map();
+			for (const command of message.client.commands) {
+				if (!cats.has(command[1].info.category)) cats.set(command[1].info.category,{
+					category: command[1].info.category,
+					count: 1,
+				});
+				else {
+					cats.get(command[1].info.category).count += 1;
+				}
+			}
+			for (const category of cats) console.log(category[1].category, category[1].count);
+			this.actions.sendMessage(message, embed);
+
+
+			return;
+		}
+
+
+
+
+		
 		// let command = message.client.commands.get(content);
 		// if (command) {
 		// 	console.log(command);
@@ -55,26 +86,28 @@ module.exports = class help extends Master {
 	 * - [ ] Filter categories correctly,
 	 * - [ ] Generate proper embed
 	 */
-	_categoriesRichEmbed(commandList, content) {
+	_categoriesRichEmbed(commands, content) {
+		let list = [];
 		if (content) {
-
-			//if content, filter based off commands that fit the category
-			let temp = new Map();
-			let category = commandList.filter(command => command.info.category === content);
-			if (category) {
-				for (const command of category) {
-					console.log(command.info.name);
-				}
-
+			// let category = commands.values().filter(command => command.info.category === content);
+			for (const command of commands) {
+				const category = content;
+				if (command[1].info.category === category) list.push(command[1].info.name);
 			}
-
-
-
-		} else {
-
+			if (list) {
+				let embed = new this.Discord.MessageEmbed()
+					.setColor('#644a5')
+					.setTitle(`Help:category:${content}`);
+				for (const command of list) {
+					let reqPermissions = commands.get(command).info.modOnly ? ": [[Requires Permissions]]" : "";
+					embed.addField(command + reqPermissions, commands.get(command).info.description, true);
+				}
+				return embed;
+			}
+			return false;
 		}
 	}
-	_commandRichEmbed(info) {
+	_commandRichEmbed(info, all = false) {
 
 	}
 }

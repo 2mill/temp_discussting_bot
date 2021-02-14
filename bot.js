@@ -6,18 +6,15 @@ const commandLoad = require('./commands/Loader').load();
 const eventLoad = require('./events/Loader').load();
 
 
+
 const client = new Discord.Client();
 const config = require('./config.json');
 const key = process.env.DISCORD_TOKEN;
-
 client.keychain = {
 	'token' : key,
 	'prefix': process.env.PREFIX,
 }
 client.prefix = process.env.PREFIX;
-
-
-
 //Load events
 client.events = eventLoad;
 
@@ -28,6 +25,7 @@ client.events.forEach(event => {
 	client.on(event.name, event.eventHandler());
 	console.log(symbol.success, event.name);
 });
+
 
 //load commands
 client.commands = commandLoad;
@@ -41,6 +39,7 @@ client.commands.forEach(command => {
 	}
 
 })
+
 
 //Login
 client.login(client.keychain['token']).catch(() => {
