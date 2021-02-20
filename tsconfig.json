@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"sourceMap": true,
+		"outDir": "./dist/"
+	},
+	"files": [
+		"commands/**/*.ts",
+		"commands/*.ts",
+		"actions/*.ts",
+		"events/*.ts",
+		"events/**/*.ts",
+		"./bot.ts"
+	]
+}
