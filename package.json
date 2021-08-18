@@ -2,7 +2,7 @@
   "name": "temp_discussting_bot",
   "version": "1.0.0",
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "description": "An all purpose bot for the Discussting discord",
   "main": "bot.js",
@@ -23,7 +23,7 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "cli-progress": "^3.9.0",
-    "discord.js": "^12.5.1",
+    "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
     "log-symbols": "^4.0.0"
