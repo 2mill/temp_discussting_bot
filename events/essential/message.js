@@ -10,9 +10,7 @@ module.exports = class Message extends Master {
     eventHandler() {
         return function(message) {
             const client = message.client;
-
             if (message.author.bot) return;
-
             if (!message.content.startsWith(client.keychain['prefix'])) return;
 
 
