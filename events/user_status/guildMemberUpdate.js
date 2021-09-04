@@ -10,9 +10,19 @@ module.exports = class Ready {
         return function(oldMember, newMember) {
 			console.log("UPDATE!")
 			let games = user_games_playing(newMember)
-			console.log(newMember.presence.activities[0].type)
 			for (let game of games) {
-				console.log(game.name)
+				let log_room = find_room(
+					newMember.guild.channels,
+					`${game.name}-activity-logs`
+				)
+				.then(logRoom => {
+					if (!logRoom) {
+						logRoom = newMember.guild.channels.create(
+							`${game.name}-activity-logs`
+						)
+					} 
+					console.log(logRoom)
+				})
 			}
         }
     }
@@ -23,4 +33,14 @@ user_games_playing = user => {
 	return user.presence.activities.filter(
 		activity => activity.type === "PLAYING"
 	)
+}
+
+async function find_room(channelManager, room_name) {
+	return channelManager.fetch().then(channels => {
+		channels.filter(channel => channel === room_name)
+	}).catch(console.error);
+}
+
+write_log_room = (channel, message) => {
+
 }
