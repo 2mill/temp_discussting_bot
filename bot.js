@@ -34,20 +34,6 @@ client.events.forEach(event => {
 	console.log(symbol.success, event.name);
 });
 
-// client.on('guildMemberUpdate', (oldMem, newMem) => {
-// 	if (newMem.nickname === "new_nick" || newMem.nickname === "other_nick") {
-// 		if (newMem.guild.channels.fetch().then(
-// 			channels => {
-// 				let logChannel = channels.find(chann => chann.name === "game-presence-log")
-// 				if (!logChannel) {
-// 					logChannel = newMem.guild.channels.create("game-presence-log")
-// 				}
-// 				console.log(newMem.presence.activities[0].timestamps)
-// 				// logChannel.send(`${newMem.id} is playing <undefined atm> for ${newMem.presence.activities[0].length}`)
-// 			}
-// 		).catch(console.error));
-// 	}
-// })
 client.on('channelUpdate', (oldchan, newchan) => {
 	console.log("channel update");
 })
@@ -68,8 +54,8 @@ client.commands.forEach(command => {
 
 
 //Login
-client.login(client.keychain['token']).catch(() => {
-	console.error(symbol.error, 'Login Failed');
+client.login(client.keychain['token']).catch(error => {
+	console.error(`${symbol.error}Login Failed, Reason: ${error}`);
 	process.exit(1);
 });
 
