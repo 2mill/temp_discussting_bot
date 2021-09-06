@@ -8,24 +8,26 @@ module.exports = class Ready {
     }
     eventHandler() {
         return function(oldMember, newMember) {
-			console.log("UPDATE!")
-			let games = userGamesPlaying(newMember);
-			// Entering Callback hell for a second so I can
-			//Modulize later. Comments will be added.
-			newMember.guild.channels.fetch().then(
-				channels => {
-					for (let game of games) {
-						let logChannelName = `${game.name}-logs`;
-						let exists = channels.filter(channel => channel.name === logChannelName) === 0;
-						if (exists) {
-							console.log(`${logChannelName} exists`);
+			newMember.guild.channels.fetch();
+			let guildChannels = newMember.guild.channels.cache
+			let oldGames = userGamesPlaying(oldMember);
+			let newGames = userGamesPlaying(newMember);
+			for (let game of newGames) {
+				for (let ogame of oldGames) {
+					if (game.name === ogame.name) {
+						if (guildChannels.includes(`${game.name}-logs`)) {
+							console.log("found channel");
 						} else {
-							newMember.guild.channels.create(logChannelName);
-							console.log(`created ${logChannelName}`);
+							newMember.guild.channels.create(`${game.name}-logs`);
 						}
 					}
 				}
-			)
+			}
+
+
+
+			// Entering Callback hell for a second so I can
+			//Modulize later. Comments will be added.
 
         }
     }
