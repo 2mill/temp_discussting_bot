@@ -1,79 +1,72 @@
 const chalk = require('chalk');
 const symbols = require('log-symbols');
-const { ActivityType } = require('discord.js')
+const { ActivityType, ChannelManager } = require('discord.js')
 module.exports = class Ready {
     constructor() {
-        this.name = 'guildMemberUpdate'
+        this.name = 'presenceUpdate'
         this.sender = false;
     }
     eventHandler() {
-        return function(oldMember, newMember) {
-			let newGames = userGamesPlaying(newMember);
-			let logChannelNames = generateRoomNames(newGames, 'logs');
-			findGameLoggingChannels(logChannelNames, newMember.guild.channels).then(
-				channels => {
-					log_channels(logChannelNames, channels, newMember.guild.channels).then(
-						new_channels => {
-							//At this point, the program is able to
-							//not duplicated channels by accident.
-							//Need to write notes on my solution later.
-							for (let channel of new_channels) {
-								console.log(channel);
-								// channel.send("something")
-							}
-						}
-					)
-
-				}
+        return function(oldPresence, newPresence) {
+			let diff = diffNewGames(
+				activitesNamesOnly(userGamesPlaying(oldPresence)),
+				activitesNamesOnly(userGamesPlaying(newPresence)),
 			)
-
-
-			// Entering Callback hell for a second so I can
-			//Modulize later. Comments will be added.
+			console.log(diff);
+			//No game update so no change.
+			if (diff.length === 0) return;
+			let loggingChannelsNames = generateRoomNames(diff, 'logs');
+			generateMissingChannels(loggingChannelsNames, newPresence.guild.channels).then(
+				channels => {
+					console.log(channels)
+					channels.forEach(channel => {
+						if (loggingChannelsNames.includes(channel.name)) {
+							channel.send(`USER: @${newPresence.user.username}\nSTARTED`);
+						}
+					})
+				}
+			);
         }
+
+
     }
 }
 
-async function log_channels(loggingList, channels, channelManager) {
-	// Figure out why it's mapping room ID instead of room name...
-	let fuckIt = Array.from(channels.values());
-	console.log(fuckIt)
-	let againFuck = [];
-	for (let channel of fuckIt) {
-		againFuck.push(channel.name);
-	}
-	loggingList.forEach(element => {
-		if (!againFuck.includes(element)) {
-			fuckIt.push(channelManager.create(element));
-		}
-		
+let diffNewGames = (oldPresenceGames, newPresenceGames) => newPresenceGames.filter(game => !oldPresenceGames.includes(game));
+
+
+async function generateMissingChannels(channelNames, channelManager) {
+	//This works, but I think can use some nice cleanup somewhere.
+	let channels = await channelManager.fetch()
+	let existingChannelNames = [];
+	//If the channel already exists, then push it into the channel list.
+	channels.forEach(channel => {
+		if (channelNames.includes(channel.name)) existingChannelNames.push(channel.name);
 	});
-	return fuckIt
+	console.log(existingChannelNames);
+	//Otherwise, make a new channel.
+	channelNames.forEach(channel => {
+		if (!existingChannelNames.includes(channel)) channelManager.create(channel);
+	})
+	return channels;
+
 }
 
-let userGamesPlaying = user => {
+let userGamesPlaying = presence => {
 	//See if you can figure out importing better.
-	return user.presence.activities.filter(
+	return presence.activities.filter(
 		activity => activity.type === "PLAYING"
 	);
 }
-
-
-async function findGameLoggingChannels(gameLoggingChannelNames, channelManager) {
-	let channels = await channelManager.fetch();
-	// console.log(channels);
-	return channels.filter(channel => {
-		if (gameLoggingChannelNames.includes(channel.name.toLowerCase())) {
-			console.log(`${channel.name} match`);
-		}
-		return gameLoggingChannelNames.includes(channel.name.toLowerCase())
-	})
+let activitesNamesOnly = activities => {
+	return activities.map(activity => activity.name);
 }
 
 let generateRoomNames = (games, template) => {
+	//I can clean this up with map now I think.
 	let temp = []
 	for (let game of games) {
 		temp.push(`${game}-${template}`.toLowerCase().replaceAll(" ", "-"));
 	}
-	return temp;
+	return games.map(game => `${game}-${template}`.toLowerCase().replaceAll(" ", "-"));
 }
