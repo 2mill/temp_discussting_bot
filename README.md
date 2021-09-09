@@ -3,8 +3,7 @@
 
 
 ## Dependancies
-Node v14.0.0 or later
+Node v16.6.0 or later
 
-Currently deployed 
+09/09 Added game logging capability
 
-Adding new special feature

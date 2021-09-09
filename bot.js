@@ -7,7 +7,15 @@ const eventLoad = require('./events/Loader').load();
 
 
 
-const client = new Discord.Client();
+const client = new Discord.Client({
+	intents: [
+		Discord.Intents.FLAGS.GUILDS,
+		Discord.Intents.FLAGS.GUILD_MEMBERS,
+		Discord.Intents.FLAGS.GUILD_MESSAGES,
+		Discord.Intents.FLAGS.GUILD_PRESENCES,
+
+	]
+});
 const config = require('./config.json');
 const key = process.env.DISCORD_TOKEN;
 client.keychain = {
@@ -26,6 +34,10 @@ client.events.forEach(event => {
 	console.log(symbol.success, event.name);
 });
 
+client.on('channelUpdate', (oldchan, newchan) => {
+	console.log("channel update");
+})
+
 
 //load commands
 client.commands = commandLoad;
@@ -42,8 +54,8 @@ client.commands.forEach(command => {
 
 
 //Login
-client.login(client.keychain['token']).catch(() => {
-	console.error(symbol.error, 'Login Failed');
+client.login(client.keychain['token']).catch(error => {
+	console.error(`${symbol.error}Login Failed, Reason: ${error}`);
 	process.exit(1);
 });
 

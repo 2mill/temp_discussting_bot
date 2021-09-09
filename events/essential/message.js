@@ -2,7 +2,7 @@ const Master = require('../Master.js');
 module.exports = class Message extends Master {
     constructor() {
         super(
-            'message',
+            'messageCreate',
             'processor',
         )
     }
@@ -10,10 +10,10 @@ module.exports = class Message extends Master {
     eventHandler() {
         return function(message) {
             const client = message.client;
-
+			console.log("Got message")
             if (message.author.bot) return;
-
             if (!message.content.startsWith(client.keychain['prefix'])) return;
+
 
 
             /**
@@ -21,11 +21,9 @@ module.exports = class Message extends Master {
              * [1] if true, arguments
              * [2] 
              */
+
+			//TODO: Modulate ARG PARSER
             let command = />(\w+).?(-[\w.]+)?([\w\s@#<:>]*)?/.exec(message.content);
-
-
-
-
             //cuz I am bad w/ Regex
 
             //Removes the dash from the args field and places it into a set
