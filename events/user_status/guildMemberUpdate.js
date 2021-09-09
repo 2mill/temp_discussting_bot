@@ -9,6 +9,9 @@ module.exports = class Ready {
     }
     eventHandler() {
         return function(oldPresence, newPresence) {
+			if (oldPresence.activites === null || newPresence.activites === null) {
+				return;
+			}
 			let diff = diffNewGames(
 				activitesNamesOnly(userGamesPlaying(oldPresence)),
 				activitesNamesOnly(userGamesPlaying(newPresence)),
