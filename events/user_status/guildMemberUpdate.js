@@ -9,9 +9,8 @@ module.exports = class Ready {
     }
     eventHandler() {
         return function(oldPresence, newPresence) {
-			if (oldPresence.activites === null || newPresence.activites === null) {
-				return;
-			}
+			if (oldPresence.activities === null || newPresence.activities === null) return;
+          
 			let diff = diffNewGames(
 				activitesNamesOnly(userGamesPlaying(oldPresence)),
 				activitesNamesOnly(userGamesPlaying(newPresence)),
@@ -19,11 +18,11 @@ module.exports = class Ready {
 			//No game update so no change.
 			if (diff.length === 0) return;
 			let loggingChannelsNames = generateRoomNames(diff, 'logs');
+			console.log(loggingChannelsNames);
 			generateMissingChannels(loggingChannelsNames, newPresence.guild.channels).then(
 				channels => {
 					channels.forEach(channel => {
 						if (loggingChannelsNames.includes(channel.name)) {
-							console.log(channel)
 							channel.send(`@${newPresence.user.username} PLAYING`);
 						}
 					});
@@ -55,7 +54,9 @@ async function generateMissingChannels(channelNames, channelManager) {
 	let parent = findCategory(channels, "BOT-LOGS");
 
 	if (!parent) {
-		parent = await createCategory(channelManager, "BOT-LOGS");
+		parent = [await createCategory(channelManager, "BOT-LOGS")];
+	} else {
+		parent = Array.from(parent.values());
 	}
 	//If the channel already exists, then push it into the channel list.
 	channels.forEach(channel => {
@@ -64,7 +65,7 @@ async function generateMissingChannels(channelNames, channelManager) {
 	//Otherwise, make a new channe//.
 	channelNames.forEach(channel => {
 		if (!existingChannelNames.includes(channel)) channelManager.create(channel, {
-			parent: parent,
+			parent: parent.pop(),
 		});
 	})
 	return channelManager.fetch();
