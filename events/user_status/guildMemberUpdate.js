@@ -21,6 +21,8 @@ module.exports = class Ready {
 			if (diff.length === 0) return;
 			//No game update so no change.
 			const loggingChannelsNames = generateRoomNames(diff, 'logs');
+			console.log(gameLogger(diff, newPresence.guild.channels, loggingChannelsNames));
+			
 			channelManager.fetch().then(channels => {
 				let parent = findCategory(channels, CATEGORY_NAME);
 				if (!parent) {
@@ -51,9 +53,28 @@ async function gameLogger(diff, channelManager, loggingChannelsNames) {
 	const channels = await channelManager.fetch();
 	const parent = getCategory(channels, channelManager, CATEGORY_NAME);
 	//TODO: FIGURE OUT HOW TO MAP LOG CHANNEL NAMES TO ACTUAL CHANNELS AND FIX UNDFINEDs
-	const nameMap = channels.map(channel => channel.name)
-	//TODO: THEN RETURN A COLLECTION OF ONLY THE CHANNELS NEEDED
+
+	let existingChannels = new Map();
+	loggingChannelsNames.forEach(loggingChannel => {
+		existingChannels.set(loggingChannel, false);
+	});
+	channels.forEach(channel => {
+		if (loggingChannelsNames.includes(channel.name)) {
+			existingChannels.set(channel.name, channel);
+		}
+	});
+	let finalList = existingChannels.values();
+
+	return nameToChannel.values();
 }
+
+
+
+
+
+
+	//TODO: THEN RETURN A COLLECTION OF ONLY THE CHANNELS NEEDED
+
 
 let diffNewGames = (oldPresenceGames, newPresenceGames) => newPresenceGames.filter(game => !oldPresenceGames.includes(game));
 //Checks to see if a log category has been created otherwise, makes one.
@@ -69,7 +90,7 @@ let diffNewGames = (oldPresenceGames, newPresenceGames) => newPresenceGames.filt
  */
 async function getCategory(channels, channelManager, categoryName) {
 	let categories = findCategory(channels, categoryName);
-	if (!foundCategories) {
+	if (!categories) {
 		//Needs to be wrapped into an array to due the nature of findCategory.
 		categories = [await createCategory(channelManager, categoryName, force)];
 	}
@@ -83,7 +104,7 @@ async function getCategory(channels, channelManager, categoryName) {
  * @returns {Array if found else false boolean}
  */
 let findCategory = (channels, categoryName) => {
-	let category = channels.filter(channel => isCategory(channel) && channel.name === categoryName);
+	let categfoundCategoriesory = channels.filter(channel => isCategory(channel) && channel.name === categoryName);
 	//Due to the nature of Discord.js returning a collection instead of an array with filter.
 	//It's needed that we collect the actual values instead. Hence .values() being used here.
 	return category.size === 0 ? false : category.values();
